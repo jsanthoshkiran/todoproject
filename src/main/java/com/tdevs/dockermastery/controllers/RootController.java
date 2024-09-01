@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class RootController {
 
     @Autowired
     private TodoRepository todoRepository;
 
-    @GetMapping
+    @GetMapping("/todos")
     public ResponseEntity<?> getRoot() {
         List<Todo> allTodos = todoRepository.findAll();
         List<TodoDTO> todoDTOs = allTodos.stream()

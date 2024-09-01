@@ -35,3 +35,6 @@ build/
 ### docker
 Dockerfile
 broken-container.Dockerfile
+
+### frontend
+frontend/node_modules

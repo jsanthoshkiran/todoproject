@@ -56,7 +56,7 @@ set DB_PASSWORD=root
 As the application starts, it creates a table called `todo` and add a few rows to it.
 The application runs at port `8080`
 
-Once the application is started, you can go to your browser and go to url `http://localhost:8080/`. This will return the following response on your browser:
+Once the application is started, you can go to your browser and go to url `http://localhost:8080/api/todos`. This will return the following response on your browser:
 ```json
 {
   "todos": [
@@ -77,6 +77,7 @@ Once the application is started, you can go to your browser and go to url `http:
 ```
 
 If you are getting this output, your application is running correctly.
+
 
 ## Packaging
 
@@ -102,3 +103,30 @@ This application contains unit tests that can be run by
 ```
 
 Make sure all tests are passed before running the application.
+
+## Building Frontend
+
+This application contains a react frontend under `frontend` folder. To build this, make sure you have `npm` and `nodejs` installed on your system.
+To run it locally, open the `frontend` folder using below command:
+```shell
+cd frontend
+```
+Now, install all the frontend `nodejs` dependencies as below:
+```shell
+npm install
+```
+
+Start the frontend service:
+```shell
+npm start
+```
+
+If all the steps are successful, a page will open in the browser at hostname `http://localhost:3000`. This page will communicate with the backend APIs `/api/todos` to display the available TODOs. If your backend service is not running, it will result in empty TODOs.
+
+In order to build the frontend, run below command:
+```shell
+npm run build
+```
+This command will generate some files inside `frontend/build` folder. **Copy all the content of `frontend/build` folder to `src/main/resources/static`**. Now your spring boot application will serve the frontend instead of a separate `npm` server.
+
+You can now shut down the frontend service and restart the application using `./mvnw spring-boot:run` command. Go to your browser and type `http://localhost:8080` and it will open the frontend page listing all the available todos.
