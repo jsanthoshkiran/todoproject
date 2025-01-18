@@ -1,33 +1,32 @@
-name: Build and Push Docker Image
+name: Build and push docker image
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      - name: Setup docker
+        uses: docker/setup-buildx-action@v3
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v3.3.0
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to Docker hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    - name: Extract Git Commit Hash
-      id: git_info
-      run: echo "{name}=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: jsanthoshkiran/todo-repo:${{ steps.git_info.outputs.commit_hash }}
+      - name: Extract git commit hash
+        run: echo "commit_hash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Build and push docker image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: todo:${{ env.commit_hash }}
