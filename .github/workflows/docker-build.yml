@@ -24,7 +24,8 @@ jobs:
 
     - name: Extract Git Commit Hash
       id: git_info
-      run: echo "{name}=$(git rev-parse --short HEAD)"" >> $GITHUB_OUTPUT
+      run: echo "{name}=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
